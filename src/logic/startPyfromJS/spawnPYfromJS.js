@@ -9,7 +9,7 @@ pythonProcess_barcode.stdout.on('data', (data) => {
 });
 
 
-const pythonProcess_qr = spawn('python', ['./src/logic/qr/qr_gen.py']);
+const pythonProcess_qr = spawn('python', ['./src/logic/qr/qr_gen.py'], 'inputtext');
 
 pythonProcess_qr.stdout.on('data', (data) => {
     console.log(data.toString());
