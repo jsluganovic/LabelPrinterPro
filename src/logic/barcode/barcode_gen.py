@@ -1,5 +1,13 @@
 """
-Barcode generater in Python
+LabelPrinterPro - JS 2 PY bridge 
+Copyright (c) 2023 LPP team
+All rights reserved.
+
+@Author Julien Sluganovic
+@File barcode_gen.py
+
+
+Barcode generater in Python 
 Output: barcode[gen_number, date, time].png
 
 """

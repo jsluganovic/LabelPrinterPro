@@ -1,3 +1,13 @@
+/*
+LabelPrinterPro - JS 2 PY bridge 
+Copyright (c) 2023 LPP team
+All rights reserved.
+
+@Author Julien Sluganovic
+@File spawnPYfromJS.js
+*/
+
+
 // Spawn a python process from JS 
 
 const { spawn } = require('child_process');

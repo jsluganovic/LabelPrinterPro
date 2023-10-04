@@ -1,4 +1,12 @@
 """
+LabelPrinterPro - JS 2 PY bridge 
+Copyright (c) 2023 LPP team
+All rights reserved.
+
+@Author Julien Sluganovic
+@File qrgen.py
+
+
 Python based QR code generator
 Output: qrcode[gen_number, date, time].png
 """
