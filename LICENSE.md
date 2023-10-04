@@ -1,7 +1,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) 2023 Julien Sluganovic
+Copyright (c) 2023 Julien Sluganovic and Leonhard Trinks and Apl-Erkhan Kubatbaev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
