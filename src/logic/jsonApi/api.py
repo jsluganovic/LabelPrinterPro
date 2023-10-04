@@ -10,8 +10,19 @@ All rights reserved.
 import os
 import json
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
+
+# Enable CORS
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
 
 # Endpoint to process incoming JSON documents
 @app.route('/process', methods=['POST'])
@@ -19,7 +30,14 @@ def process_json():
     """
     Process incoming JSON document
     """
+    # try:
+    #     data = request.get_json()
+    # except Exception as e:
+    #     response = {f'status': 'error', 'message': 'Invalid JSON payload', 'real_error': e}
+    #     print(response)
+    #     return jsonify(response), 400
     data = request.get_json()
+    
 
     # Write JSON data to file
     file_name = 'data.json'
@@ -27,9 +45,8 @@ def process_json():
         json.dump(data, f)
 
     # Return a response
-    response = {'status': 'success'}
+    response = {'status': 'success from Julien'}
     return jsonify(response)
-
 # Endpoint to retrieve a list of all saved JSON documents
 @app.route('/list', methods=['GET'])
 def list_json():
@@ -68,4 +85,4 @@ def get_json(name):
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000, host='0.0.0.0')
