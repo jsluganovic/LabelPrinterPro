@@ -25,7 +25,7 @@ from barcode.writer import ImageWriter
 
 import json
 
-def generate_barcode(barcode_number):
+def generate_barcode(barcode_number, req_number):
     """
     Generate barcode image from barcode number
     
@@ -91,7 +91,9 @@ def read_reqNumber(file_path):
     return req_number
 
 # Example usage
-barcode_number = read_barcodeNumber(f"data/req/{str(read_reqNumber())}/barcode.json")
+#barcode_number = read_barcodeNumber(f"data/req/{str(read_reqNumber())}/barcode.json")
+
+
 file_name = generate_barcode(barcode_number)
 print("Generated barcode image:", file_name)
 

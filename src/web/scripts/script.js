@@ -26,9 +26,46 @@ codeFormButton.addEventListener('click', (e) => {
     if (formSvgQrcode.checked) {
         let codeInputValue = codeFormInput.value.trim() 
 
-        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${codeInputValue}`
+       
+        fetch('http://127.0.0.1:5000/gqrcode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                qrcode_data: codeInputValue,
+                reqNumber: "123123" 
+            }),
+           
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            img.src = `https://rff7hjr5-5000.euw.devtunnels.ms/uqrcode/${data.req_number}`
+        })
+        .catch(error => console.error(error))
     } else {
-        JsBarcode("#barcode", codeFormInput.value);
+       // JsBarcode("#barcode", codeFormInput.value);
+        let codeInputValue = codeFormInput.value.trim() 
+
+       
+        fetch('http://127.0.0.1:5000/gbarcode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                bcode_data: codeInputValue,
+                req_number: "123123" 
+            }),
+           
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            img.src = `https://rff7hjr5-5000.euw.devtunnels.ms/ubarcode/${data.req_number}`
+        })
+        .catch(error => console.error(error))
     }
 })
 
@@ -56,9 +93,9 @@ outputButtonReset.addEventListener('click', (e) => {
 outputButtonDownload.addEventListener('click', () => {
     html2canvas(document.querySelector('.output'))
         .then(canvas => {
-            const url = canvas.toDataURL('image/svg')
+            const url = canvas.toDataURL('image/png')
             const a = document.createElement('a')
-            a.setAttribute('download', 'imageName.svg')
+            a.setAttribute('download', 'imageName.png')
             a.setAttribute('href', url)
             a.click()
         })

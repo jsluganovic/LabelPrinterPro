@@ -10,20 +10,21 @@ from time import sleep
 import os
 import json
 from flask import Flask, request, jsonify, send_file
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import subprocess
 import random
-app = Flask(__name__)
+from werkzeug.exceptions import UnsupportedMediaType
 
+app = Flask(__name__)
 CORS(app)
 
 # Enable CORS
-@app.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-    return response
+# @app.after_request
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+#     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+#     return response
 
 # Endpoint to process incoming JSON documents
 @app.route('/process', methods=['POST'])
@@ -95,6 +96,7 @@ def get_json(name):
 
 
 
+# Endpoint to generate QR Code
 @app.route('/gqrcode', methods=['POST'])
 def generate_qrCode():
     """
@@ -104,17 +106,19 @@ def generate_qrCode():
     data = request.get_json()
 
     # Get QR Code data
-    qrCode_data = data["qrCode_data"]
-    req_number = data["req_number"]
+    qrCode_data = data["qrcode_data"]
+    req_number = data["reqNumber"]
 
     # Generate QR Code
-    subprocess.Popen(['python', '../qrcode/qrgen.py', qrCode_data, req_number])
-    
-    
-    
+    process = subprocess.Popen(['python', '../qrcode/qrgen.py', qrCode_data, req_number], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    print(stdout.decode())
+    sleep(0.5)
+
     # Return response
     response = {'status': 'success', 'message': 'QR Code generated!', 'req_number': req_number}
-    return response
+    return jsonify(response)
+
 
 
 @app.route('/uqrcode/<req_number>', methods=['GET'])
@@ -136,7 +140,48 @@ def upload_qrCode_fromReqNumber(req_number):
     return send_file(qr_file, mimetype='image/png')
 
 
+@app.route('/gbarcode', methods=['POST'])
+def generate_barcode():
+    """
+    Generate BarCode
+    """
+    # Get JSON data
+    data = request.get_json()
 
+    # Get QR Code data
+    bCode_data = data["bcode_data"]
+    req_number = data["req_number"]
+    name = f"bCode_{req_number}.png"
+    # Generate QR Code
+   # subprocess.Popen(['python', '../barcode/bargen_v2.py', f"--barcode-number {int(bCode_data)} --req-number {req_number} --file-name {t} generate"])
+    process = subprocess.Popen(['python', '../barcode/bargen_v3.py', bCode_data, req_number], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    print(stdout.decode())
+    sleep(0.5)
+
+    # Return response
+    response = {'status': 'success', 'message': 'QR Code generated!', 'req_number': req_number}
+    return response
+
+
+
+@app.route('/ubarcode/<req_number>', methods=['GET'])
+def upload_barcode_fromReqNumber(req_number):
+    """
+    Upload QR Code from request number
+    """
+    print(req_number)
+    barcode_file = f'./code/bCode_{req_number}.png'
+
+    if not os.path.exists(barcode_file):
+        response = {'status': 'error', 'message': 'File not found'}
+        return jsonify(response), 404
+
+        
+    # Return response
+    response = {'status': 'success', 'message': 'Barcode was served', 'req_number': req_number}
+
+    return send_file(barcode_file, mimetype='image/png')
 @app.route('/this', methods=['POST'])
 def this():
     """
@@ -150,7 +195,7 @@ def this():
     qrCode_data = data["qrCode_data"]
     req_number = data["req_number"]
     # qr_file = f'./qrcode/LPPqr_{req_number}.png'
-    qr_file = r"C:\Users\JulienSluganovic\Desktop\stuff\LabelPrinterPro\src\logic\jsonApi\qrcode" + f'\LPPqr_{req_number}.png'
+    qr_file = r"C:\Users\JulienSluganovic\Desktop\stuff\LabelPrinterPro\src\logic\jsonApi\qrcode" + f'LPPqr_{req_number}.png'
 
     # Generate QR Code
     subprocess.Popen(['python', '../qrcode/qrgen.py', qrCode_data, req_number])

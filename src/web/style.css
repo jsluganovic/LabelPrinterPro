@@ -168,6 +168,12 @@ section {
     text-align: center;
 }
 
+
+.output-code__div > img {
+    height: 200px;
+    width: 200px;
+    
+}
 .output-button {
     justify-self: center
 }
