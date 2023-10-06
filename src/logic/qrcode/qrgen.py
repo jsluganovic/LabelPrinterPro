@@ -19,11 +19,17 @@ import os
 import datetime
 import qrcode
 import argparse
+
+"""
+Parser setup
+"""
+
 parser = argparse.ArgumentParser(description='Text to write in QR code')
 parser.add_argument('input', type=str, help='Text to write in QR code (string)')
+parser.add_argument('req_number', type=str, help='Request number (string)')
 args = parser.parse_args()
 
-def generateQRCode(data):
+def generateQRCode(data, req_number):
     """
     Generate QR code
     """
@@ -35,13 +41,14 @@ def generateQRCode(data):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
     qr.make(fit=True)
-    img = qr.make_image(fill='black', back_color='white')
+    img = qr.make_image(fill='purple', back_color='white')
 
     # Save QR code
-    file_name = 'qrcode/qrcode' + str(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')) + '.png'
+    # str(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')) + 
+    file_name = 'qrcode/LPPqr' + '_' +  req_number + '.png'
     img.save(file_name)
 
     # Return file name
-    return file_name
+    return print(file_name)
 
-generateQRCode(args.input)
+generateQRCode(args.input, args.req_number)
