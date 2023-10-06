@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap');
+
+:root{
+/*===== Colores =====*/
+--first-color: #9D4BFF;
+--first-color-dark: #23004D;
+--first-color-light: #A49EAC;
+--first-color-lighten: #F2F2F2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 936px;
+    margin: 0 auto;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f2f2f2;
+
+    font-family: 'Montserrat', sans-serif;
+}
+
+button, input {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.header {
+    color: #F2F2F2;
+    background-color: #9D4BFF;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-nav {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-nav__logo {
+    cursor: pointer;
+}
+
+.header-list__item {
+    list-style: none;
+}
+
+.header-list__item > a,
+.header-nav__logo > a {
+    color: #F2F2F2;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-list__item > a:hover {
+    color:aqua;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 40px 300px 200px 300px 40px;
+    grid-template-rows: 40px 360px 40px 40px;
+    grid-template-areas: 
+    ". . . . ."
+    ". input . output ."
+    ". input . output ."
+    ". . . . ."
+    ;
+}
+section {
+    height: 400px;
+    width: 300px;
+    background-color: #fff;
+}
+
+/* ----- input section ----- */
+.input {
+    grid-area: input;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* ----- QR-code & Barcode ----- */
+.code-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+/* [type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+[type=radio] + svg {
+    cursor: pointer;
+}
+
+[type=radio]:checked + svg {
+    outline: 2px solid #f00;
+    } */
+
+.text-form__input,
+.code-form__input {
+    padding: 8px 20px;
+}
+
+.code-form__button,
+.text-form__button {
+    padding: 10px 0;
+}
+
+.form-svg {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form-svg__qrcode {
+    height: 40px;
+}
+
+.form-svg__barcode {
+    height: 60px;
+}
+/* ----- Text Form Generator ----- */
+.text-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.output {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 240px 100px 40px;
+    grid-area: output;
+}
+
+.output-code {
+    /* height: 250px; */
+    width: 300px;
+    /* background-color: aquamarine; */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding-top: 40px;
+}
+
+.output-text {
+    font-size: 40px;
+    text-align: center;
+}
+
+.output-button {
+    justify-self: center
+}
+
+.output-button__reset {
+    padding: 10px 20px;
+}
+
+.output-button__download {
+    padding: 10px 20px;
+    margin-left: 10px;
+}
+
+.footer {
+    height: 100px;
+    background-color: #ddd;
+}
