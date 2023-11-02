@@ -12,8 +12,6 @@ import json
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS, cross_origin
 import subprocess
-import random
-from werkzeug.exceptions import UnsupportedMediaType
 
 app = Flask(__name__)
 CORS(app)
